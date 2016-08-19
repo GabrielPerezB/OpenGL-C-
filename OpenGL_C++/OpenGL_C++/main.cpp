@@ -253,16 +253,25 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 			positionY -= 5;
 		}
 	}
-
-	glfwInit();
 	/*
+	glfwInit();
 	int buttonCount;
 	const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
 
-	if (GLFW_RELEASE == buttons[0] && GLFW_RELEASE == buttons[1] && GLFW_RELEASE == buttons[2] && GLFW_RELEASE == buttons[3]) {
-		option = 4;
-	}*/
-	
+	if (GLFW_PRESS == buttons[0]) {
+		deleteDataInFile();
+	}
+	if (GLFW_PRESS == buttons[1]) {
+		readInFile();
+	}
+	if (GLFW_PRESS == buttons[2]) {
+		writeInFile();
+	}
+	if (GLFW_PRESS == buttons[3]) {
+		exit(0);
+	}
+
+	*/
 	int axesCount;
 	const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
 	if (GLFW_RELEASE == axes[2] && GLFW_RELEASE == axes[3]) {
