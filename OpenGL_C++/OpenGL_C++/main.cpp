@@ -18,7 +18,14 @@ GLdouble radius = 1;
 
 
 fstream fArchive("Data.txt", ios::in | ios::out | ios::binary);
+void menu() {
+	
+	printf("\n -> Press X to save position");
+	printf("\n -> Press SQUARE to delete data");
+	printf("\n -> Press CIRCLE to do the travel");
+	printf("\n -> Press TRIANGLE to exit \n \n");
 
+}
 
 /*
 	max x = -350        max y = 250                 min x =     350                     min y = -250
@@ -105,6 +112,7 @@ void autoMove(int x, int y) {
 //fucntion to read the data file and call the automove Function
 void readInFile() {
 	system("cls");
+	menu();
 	int index = 0;
 	fArchive.seekg(0, ios::end);
 	int indexStop = fArchive.tellg();
@@ -131,6 +139,7 @@ void deleteDataInFile() {
 	regData.savedPositionX = -1;
 	regData.savedPositionY = -1;
 	system("cls");
+	menu();
 	printf("Data deleted \n");
 }
 
@@ -150,9 +159,9 @@ void redisplayFunc(void)
 	// Note this when you decrease z like -8.0 the drawing will looks far , or smaller.
 	glTranslatef(0.0, 0.0, -20.0);
 
-	// Red color used to draw.
-	glColor3f(0.8, 0.2, 0.1);//0.8, 0.2, 0.1
-
+	// Orange color used to draw.
+	glColor3f(1.0 ,0.3, 0.0);
+	
 	// changing in transformation matrix.
 	// rotation about X axis
 	glRotatef(xRotated, 1.0, 0.0, 0.0);
@@ -216,69 +225,39 @@ void idleFunc(void)
 
 void joystick(unsigned int buttonmask, int x, int y, int z)
 {
-	if (buttonmask & 0x08) {
-		//move down
-		xRotated = 270;
-		option = 0;
-		if (positionX - 5 >= -350) {
-			positionX -= 5;
-		}
-	}
-	if (buttonmask & 0x01) {
-		//move right
-		yRotated = 270;
-		option = 2;
-		if (positionY + 5 <= 250)
-		{
-			positionY += 5;
-		}
-	}
-
-	if (buttonmask & 0x02) {
-		//move up
-		xRotated = 270;
-		option = 1;
-		if (positionX + 5 <= 350)
-		{
-			positionX += 5;
-		}
-	}
-
-	if (buttonmask & 0x04) {
-		//move left
-		yRotated = 270;
-		option = 3;
-		if (positionY - 5 >= -250)
-		{
-			positionY -= 5;
-		}
-	}
-	/*
-	glfwInit();
+	
+	
 	int buttonCount;
 	const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
 
+	if (GLFW_RELEASE == buttons[0] ) {
+		option = 4;
+	}
+
 	if (GLFW_PRESS == buttons[0]) {
-		deleteDataInFile();
-	}
-	if (GLFW_PRESS == buttons[1]) {
-		readInFile();
-	}
-	if (GLFW_PRESS == buttons[2]) {
+		// button X
 		writeInFile();
 	}
+	if (GLFW_PRESS == buttons[1]) {
+		// button circle
+		deleteDataInFile();
+	}
+	if (GLFW_PRESS == buttons[2]) {
+		// button square
+		readInFile();
+	}
 	if (GLFW_PRESS == buttons[3]) {
+		// button tringle
 		exit(0);
 	}
 
-	*/
+	
 	int axesCount;
 	const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
-	if (GLFW_RELEASE == axes[2] && GLFW_RELEASE == axes[3]) {
-		option = 4;
-	}
+
+	
 	if (GLFW_PRESS == axes[0] ) {
-		//move up
+		//move right 
 		xRotated = 270;
 		option = 1;
 		if (positionX + 5 <= 350)
@@ -287,8 +266,7 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 		}
 	}
 	if (GLFW_PRESS == axes[1]) {
-		
-		//move left
+		//move down		
 		yRotated = 270;
 		option = 3;
 		if (positionY - 5 >= -250)
@@ -297,7 +275,7 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 		}
 	}
 	if (GLFW_PRESS == axes[2]) {
-		//move right
+		//move up
 		yRotated = 270;
 		option = 2;
 		if (positionY + 5 <= 250)
@@ -306,7 +284,7 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 		}
 	}
 	if (GLFW_PRESS == axes[3]) {
-		//move down
+		//move left
 		xRotated = 270;
 		option = 0;
 		if (positionX - 5 >= -350) {
@@ -323,22 +301,41 @@ void keyboard(int key, int x, int y)
 	{
 	case 100:
 		//arrow left
-		readInFile();
+		xRotated = 270;
+		option = 0;
+		if (positionX - 5 >= -350) {
+			positionX -= 5;
+		}
 		break;
 
 	case 101:
 		//arrow up
-		deleteDataInFile();
+		yRotated = 270;
+		option = 2;
+		if (positionY + 5 <= 250)
+		{
+			positionY += 5;
+		}
 		break;
 
 	case 102:
 		//arrow right
-		writeInFile();
+		xRotated = 270;
+		option = 1;
+		if (positionX + 5 <= 350)
+		{
+			positionX += 5;
+		}
 		break;
 
 	case 103:
 		//arrow down
-		exit(0);
+		yRotated = 270;
+		option = 3;
+		if (positionY - 5 >= -250)
+		{
+			positionY -= 5;
+		}
 		break;
 	}
 }
@@ -362,20 +359,29 @@ int main( int argc, char **argv) {
 	// create the window 
 	glutCreateWindow("OpenGL and C++ Proyect");
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	xRotated = yRotated = zRotated = 0;//30.0
-	xRotated = 0;//33
-	yRotated = 0;//40
-	glClearColor(0.2, 0.2, 0.2, 0.2); 
+	
+	xRotated = yRotated = zRotated = 0;
+	xRotated = 0;
+	yRotated = 0;
+	glClearColor( 0.563, 0.763, 0.500, 0.500);
 	//Assign  the function used in events
 	glutDisplayFunc(redisplayFunc);
 
 	glutReshapeFunc(reshapeFunc);
 
 	glutIdleFunc(idleFunc);
+
 	//Function to catch the keyboard's buttons 
 	glutSpecialFunc(keyboard);
+
+	glfwInit();
+
 	//Function to catch the joystick's buttons 
-	glutJoystickFunc(joystick,25);
+	glutJoystickFunc(joystick,100);
+
+	system("cls");
+	menu();
+
 	//Let start glut loop
 	glutMainLoop(); 
 
