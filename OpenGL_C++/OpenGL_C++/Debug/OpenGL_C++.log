@@ -1,4 +1,4 @@
-﻿Compilación iniciada a las 23/8/2016 1:57:29 p. m..
+﻿Compilación iniciada a las 23/8/2016 4:16:21 p. m..
      1>Proyecto "E:\TEC\2016-II\Lenguajes de Programación\Proyectos\OpenGL_C++\OpenGL_C++\OpenGL_C++.vcxproj" en el nodo 2 (Build destinos).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"E:\TEC\2016-II\Lenguajes de Programación\Glew and Glut\freeglut\include" /I"E:\TEC\2016-II\Lenguajes de Programación\glfw-3.2.bin.WIN32\include" /I"E:\TEC\2016-II\Lenguajes de Programación\glew-2.0.0\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
@@ -14,7 +14,7 @@
      1>e:\tec\2016-ii\lenguajes de programación\proyectos\opengl_c++\opengl_c++\main.cpp(288): warning C4305: '+=': truncamiento de 'double' a 'GLfloat'
      1>e:\tec\2016-ii\lenguajes de programación\proyectos\opengl_c++\opengl_c++\main.cpp(292): warning C4305: '-=': truncamiento de 'double' a 'GLfloat'
      1>e:\tec\2016-ii\lenguajes de programación\proyectos\opengl_c++\opengl_c++\main.cpp(296): warning C4305: '+=': truncamiento de 'double' a 'GLfloat'
-     1>e:\tec\2016-ii\lenguajes de programación\proyectos\opengl_c++\opengl_c++\main.cpp(449): warning C4244: 'argumento': conversión de 'double' a 'GLclampf'; posible pérdida de datos
+     1>e:\tec\2016-ii\lenguajes de programación\proyectos\opengl_c++\opengl_c++\main.cpp(490): warning C4244: 'argumento': conversión de 'double' a 'GLclampf'; posible pérdida de datos
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\TEC\2016-II\Lenguajes de Programación\Proyectos\OpenGL_C++\Debug\OpenGL_C++.exe" /INCREMENTAL /NOLOGO /LIBPATH:"E:\TEC\2016-II\Lenguajes de Programación\Glew and Glut\freeglut\lib" /LIBPATH:"E:\TEC\2016-II\Lenguajes de Programación\glfw-3.2.bin.WIN32\lib-vc2015" /LIBPATH:"E:\TEC\2016-II\Lenguajes de Programación\glew-2.0.0\lib\Release\Win32" opengl32.lib glew32.lib glfw3.lib freeglut.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"E:\TEC\2016-II\Lenguajes de Programación\Proyectos\OpenGL_C++\Debug\OpenGL_C++.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\TEC\2016-II\Lenguajes de Programación\Proyectos\OpenGL_C++\Debug\OpenGL_C++.lib" /MACHINE:X86 Debug\main.obj
      1>LINK : warning LNK4098: la biblioteca predeterminada'MSVCRT' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
@@ -23,4 +23,4 @@
 
 Compilación correcta.
 
-Tiempo transcurrido 00:00:01.78
+Tiempo transcurrido 00:00:01.64

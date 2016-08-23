@@ -330,12 +330,18 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 		exit(0);
 	}
 
-	
-	int axesCount;
-	const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+	if (x < 0)
+	{
+		//move left
+		xRotated = 270;
+		option = 0;
+		if (positionX - 5 >= -350) {
+			positionX -= 5;
+		}
 
-	
-	if (GLFW_PRESS == axes[0] ) {
+	}
+	if (x > 0)
+	{
 		//move right 
 		xRotated = 270;
 		option = 1;
@@ -344,18 +350,8 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 			positionX += 5;
 		}
 	}
-	if (GLFW_PRESS == axes[1]) {
-		//move down		
-		yRotated = 270;
-		option = 3;
-		if (positionY - 5 >= -250)
-		{
-			positionY -= 5;
-		}
-	
-	}
-
-	if (GLFW_PRESS == axes[2]) {
+	if (y < 0)
+	{
 		//move up
 		yRotated = 270;
 		option = 2;
@@ -363,62 +359,21 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 		{
 			positionY += 5;
 		}
-	}
-	if (GLFW_PRESS == axes[3]) {
-		//move left
-		xRotated = 270;
-		option = 0;
-		if (positionX - 5 >= -350) {
-			positionX -= 5;
-		}
-	}
-}
 
-void keyboard(int key, int x, int y)
-{
-	switch (key)
+	}
+	if (y > 0)
 	{
-	case 100:
-		//arrow left
-		xRotated = 270;
-		option = 0;
-		if (positionX - 5 >= -350) {
-			positionX -= 5;
-		}
-		break;
-
-	case 101:
-		//arrow up
-		yRotated = 270;
-		option = 2;
-		if (positionY + 5 <= 250)
-		{
-			positionY += 5;
-		}
-		break;
-
-	case 102:
-		//arrow right
-		xRotated = 270;
-		option = 1;
-		if (positionX + 5 <= 350)
-		{
-			positionX += 5;
-		}
-		break;
-
-	case 103:
-		//arrow down
+		//move down		
 		yRotated = 270;
 		option = 3;
 		if (positionY - 5 >= -250)
 		{
 			positionY -= 5;
 		}
-		break;
-	}
-}
 
+	}
+
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -450,8 +405,6 @@ int main( int argc, char **argv) {
 
 	glutIdleFunc(idleFunc);
 
-	//Function to catch the keyboard's buttons 
-	glutSpecialFunc(keyboard);
 
 	glfwInit();
 	
