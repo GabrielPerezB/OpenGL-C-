@@ -5,16 +5,35 @@
 #include <cstring>
 #include <fstream>
 #include <stdlib.h>
+#include <Windows.h>
+#include <mmsystem.h>
+
 using namespace std;
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
 
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 GLfloat xRotated, yRotated, zRotated;
 GLdouble radius = 1;
+
+int rotateSphere = 1;
+int backgroundColor = 0;
+// default 0.563, 0.763, 0.500, 0.500
+double colorR = 0.563;
+double colorG = 0.763;
+double colorB = 0.500;
+double colorA = 0.500;
+
+double sphereColorR = 1.0;
+double sphereColorG = 0.3;
+double sphereColorB = 0.0;
+
+
+
 
 
 fstream fArchive("Data.txt", ios::in | ios::out | ios::binary);
@@ -61,6 +80,43 @@ void writeInFile() {
 	printf("Position saved \n");
 }
 
+void changeColors() {
+	if (backgroundColor == 0)
+	{
+		colorR = 0.563;
+		colorG = 0.763;
+		colorB = 0.500;
+		colorA = 0.500;
+
+		sphereColorR = 1.0;
+		sphereColorG = 0.3;
+		sphereColorB = 0.0;
+		return;
+	}
+	if (backgroundColor % 2 != 0) {
+		colorR = 0.0;
+		colorG = 0.0;
+		colorB = 0.0;
+		colorA = 0.0;
+
+		sphereColorR = 255;
+		sphereColorG = 255;
+		sphereColorB = 255;
+
+	}
+	else {
+		colorR = 255;
+		colorG = 255;
+		colorB = 255;
+		colorA = 255;
+
+		sphereColorR = 0.0;
+		sphereColorG = 0.0;
+		sphereColorB = 0.0;
+	}
+}
+
+
 
 
 void idleFunc();
@@ -73,6 +129,7 @@ void autoMove(int x, int y) {
 		if (x > positionX)
 		{
 			positionX++;
+			option = 1;
 		}
 		if (x < positionX)
 		{
@@ -84,10 +141,12 @@ void autoMove(int x, int y) {
 			{
 				positionX--;
 			}
+			option = 0;
 		}
 		if (y > positionY)
 		{
 			positionY++;
+			option = 2;
 		}
 		if (y < positionY)
 		{
@@ -99,8 +158,12 @@ void autoMove(int x, int y) {
 			{
 				positionY--;
 			}
+			option = 3;
 		}
+		
 		idleFunc();
+
+
 		if (positionX == x && positionY == y)
 		{
 			return;
@@ -111,6 +174,7 @@ void autoMove(int x, int y) {
 
 //fucntion to read the data file and call the automove Function
 void readInFile() {
+
 	system("cls");
 	menu();
 	int index = 0;
@@ -118,7 +182,10 @@ void readInFile() {
 	int indexStop = fArchive.tellg();
 	fstream fArchiveTemp("Data.txt", ios::in | ios::out | ios::binary);
 	fArchiveTemp.seekg(0);
+	rotateSphere = 0;
 	do {
+		backgroundColor++;
+		
 		fArchiveTemp.read(reinterpret_cast<char *> (&regData), sizeof(regData));
 		if (regData.savedPositionX == -1 && regData.savedPositionY == -1) {
 			printf("Track not saved \n");
@@ -128,9 +195,20 @@ void readInFile() {
 		cout <<regData.savedPositionX << endl;
 		cout <<regData.savedPositionY << endl;
 		index += sizeof(regData);
+		
 		autoMove(regData.savedPositionX, regData.savedPositionY);
-	} while (index < indexStop);
+		PlaySound(TEXT("glassSound.wav"), NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
+		changeColors();
+		glClearColor(colorR, colorG, colorB, colorA);
 
+
+	} while (index < indexStop);
+	rotateSphere = 1;
+	backgroundColor = 0;
+	changeColors();
+	glClearColor(colorR, colorG, colorB, colorA);
+	glColor3f(sphereColorR, sphereColorG, sphereColorB);
+	PlaySound(TEXT("sound.wav"), NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 }
 
 //Function to overwrite the data file 
@@ -160,7 +238,7 @@ void redisplayFunc(void)
 	glTranslatef(0.0, 0.0, -20.0);
 
 	// Orange color used to draw.
-	glColor3f(1.0 ,0.3, 0.0);
+	glColor3f(sphereColorR ,sphereColorG, sphereColorB);
 	
 	// changing in transformation matrix.
 	// rotation about X axis
@@ -200,6 +278,7 @@ void reshapeFunc(int x, int y)
 //Function tho change the sphere's rotation direction
 void idleFunc(void)
 {
+	
 	if (option == 0)
 	{
 		yRotated -= 0.1;
@@ -226,11 +305,11 @@ void idleFunc(void)
 void joystick(unsigned int buttonmask, int x, int y, int z)
 {
 	
-	
 	int buttonCount;
 	const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
 
-	if (GLFW_RELEASE == buttons[0] ) {
+	
+	if (GLFW_RELEASE == buttons[0] && rotateSphere == 1) {
 		option = 4;
 	}
 
@@ -273,7 +352,9 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 		{
 			positionY -= 5;
 		}
+	
 	}
+
 	if (GLFW_PRESS == axes[2]) {
 		//move up
 		yRotated = 270;
@@ -291,8 +372,6 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 			positionX -= 5;
 		}
 	}
-
-
 }
 
 void keyboard(int key, int x, int y)
@@ -363,7 +442,7 @@ int main( int argc, char **argv) {
 	xRotated = yRotated = zRotated = 0;
 	xRotated = 0;
 	yRotated = 0;
-	glClearColor( 0.563, 0.763, 0.500, 0.500);
+	glClearColor(colorR,colorG,colorB,colorA);// 0.563, 0.763, 0.500, 0.500
 	//Assign  the function used in events
 	glutDisplayFunc(redisplayFunc);
 
@@ -375,13 +454,13 @@ int main( int argc, char **argv) {
 	glutSpecialFunc(keyboard);
 
 	glfwInit();
-
+	
 	//Function to catch the joystick's buttons 
 	glutJoystickFunc(joystick,100);
-
+	
 	system("cls");
 	menu();
-
+	PlaySound(TEXT("sound.wav"), NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 	//Let start glut loop
 	glutMainLoop(); 
 
