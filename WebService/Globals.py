@@ -10,3 +10,5 @@ listDiseases = []
 listMedicines = []
 listPrescriptions = []
 
+userType = []
+objectToUpdate = []

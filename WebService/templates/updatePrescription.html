@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificar prescripción</title>
+</head>
+<body>
+    <nav id="menu">
+		<ul id="Options">
+			<form action="" class="form-inline" method="post">
+                <input type="text" class="form-control" readonly value = "{{ originalId }}" name="id"
+                    value="{{request.form.id}}">
+                <input type="text" class="form-control" value = "{{ originaluserId }}" name="idUser"
+                    value="{{request.form.idUser}}">
+                <input type="text" class="form-control" value = "{{ originalAnimalId }}" name="idAnimal"
+                    value="{{request.form.idAnimal}}">
+                <input type="text" class="form-control" value = "{{ originalDiseaseId }}" name="idDisease"
+                    value="{{request.form.idDisease}}">
+                <input type="text" class="form-control" value = "{{ originalWeight }}" name="weight"
+                    value="{{request.form.weight}}">
+                <input type="text" class="form-control" value = "{{ originalDoseId }}" name="dose"
+                    value="{{request.form.dose}}">
+                <input class="btn btn-default" type="submit" value="Guardar">
+            </form>
+		</ul>
+	</nav>
+    <p>{{ error }}</p>
+</body>
+</html>

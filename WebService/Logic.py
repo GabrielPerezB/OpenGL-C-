@@ -9,6 +9,9 @@ from ClassPrescription import *
 from ClassUser import *
 from ClassMedicine import *
 
+def saveCurerntUser(accountType):
+    userType.append(" ")
+    userType[0]=accountType
 
 def callFunctions(function, *args):
     return function(args)
@@ -16,8 +19,19 @@ def callFunctions(function, *args):
 def addData(clase,*args):
     clase.add(*args)
 
+def deleteData(lista,id):
+    lists = list(filter(lambda x: x.id != id,lista))
+    lista.clear()
+    for element in lists:
+        lista.append(element)
+
 def updateDataClass(clase, *args):
     clase.add()
+
+def saveObjectToUpdate(lista,id):
+    lists = list(filter(lambda x: x.id == id, lista))
+    objectToUpdate.append(0)
+    objectToUpdate[0]=lists[0]
 
 def getDataFromList(lists,count):
     while True:
@@ -60,6 +74,12 @@ def defaultData():
         addData(disease, *parameters)
         addDataList(listDiseases, disease)
 
+    medicine = classMedicine()
+    parameters = ["123", "medicina", "asd", "asd"]
+    if validateData(listMedicines, parameters[0]) == 0:
+        addData(medicine, *parameters)
+        addDataList(listMedicines, medicine)
+
     animal = classAnimal()
     parameters = ["123","caballo", "negro", "asd"]
     if validateData(listAnimals, parameters[0]) == 0:
@@ -72,7 +92,17 @@ def defaultData():
         addData(animal2, *parameters)
         addDataList(listAnimals, animal2)
 
+    dose = classDose()
+    parameters = ["123", "123", "123", "123","55-80","700ml"]
+    if validateData(listDoses, parameters[0]) == 0:
+        addData(dose, *parameters)
+        addDataList(listDoses, dose)
 
+    prescription = classPresciption()
+    parameters = ["123", "1234", "123", "123", "60", "123"]
+    if validateData(listPrescriptions, parameters[0]) == 0:
+        addData(prescription, *parameters)
+        addDataList(listPrescriptions, prescription)
 def showData():
 
     for element in listUsers:
@@ -88,6 +118,8 @@ def showData():
         element.getInfo()
 
     for element in listDoses:
+        element.getInfo()
+    for element in listMedicines:
         element.getInfo()
 
 

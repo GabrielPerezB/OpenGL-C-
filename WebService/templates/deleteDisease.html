@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar Enfermedad</title>
+</head>
+<body>
+    <nav id="menu">
+		<ul id="Options">
+			<form action="" class="form-inline" method="post">
+                <input type="text" class="form-control" placeholder= "ID " name="id"
+                    value="{{request.form.id}}">
+                <input class="btn btn-default" type="submit" value="Eliminar">
+            </form>
+		</ul>
+	</nav>
+    <p>{{ error }}</p>
+</body>
+</html>

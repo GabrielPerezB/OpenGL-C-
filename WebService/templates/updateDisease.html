@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificar enfermedad</title>
+</head>
+<body>
+    <nav id="menu">
+		<ul id="Options">
+			<form action="" class="form-inline" method="post">
+                <input type="text" class="form-control" readonly value = "{{ originalId }}" name="id"
+                    value="{{request.form.id}}">
+                <input type="text" class="form-control" value= "{{ originalName }}" name="name"
+                    value="{{request.form.name}}">
+                <input type="text" class="form-control" value= "{{ originalDescription }}" name="description"
+                    value="{{request.form.description}}">
+                <input type="text" class="form-control" value= "{{ originalPhoto }}" name="photo"
+                    value="{{request.form.photo}}">
+                <input class="btn btn-default" type="submit" value="Guardar">
+            </form>
+
+		</ul>
+	</nav>
+    <p>{{ error }}</p>
+</body>
+</html>
