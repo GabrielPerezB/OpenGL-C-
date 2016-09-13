@@ -1,0 +1,23 @@
+h1{
+    color: deepskyblue;
+}
+#menu{
+	width: 20%;
+	background-color:transparent;
+	height: 450px;
+	padding: 15px;
+	line-height: 25px;
+	color: black;
+	float: left;
+}
+
+.selected{
+	background-color: #E0E0E0;
+}
+
+#description{
+	height: 445px;
+	width: 75%;
+	padding: 15%
+	float: left;
+}

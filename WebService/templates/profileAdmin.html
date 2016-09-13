@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-2.1.4.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+
+    <meta charset="UTF-8">
+    <title>Administrador </title>
+</head>
+<body>
+    <h1>Hey there Admin</h1>
+    <nav id="menu">
+		<ul id="Options">
+			<li id="First" value="0">Animales</li>
+			<li value="1">Medicinas</li>
+			<li value="2">Prescripciones</li>
+            <li value="3" ><a href={{url_for('createUser')}}        >Crear usuario</a></li>
+            <li value="4" ><a href={{url_for('createPrescription')}}>Crear prescripción</a></li>
+            <li value="5" ><a href={{url_for('createDose')}}        >Crear dosis</a></li>
+            <li value="6" ><a href={{url_for('addAnimal')}}         >Agregar animal</a></li>
+            <li value="7" ><a href={{url_for('addMedicine')}}       >Agregar medicina</a></li>
+            <li value="8" ><a href={{url_for('addDisease')}}        >Agregar enfermedad</a></li>
+		</ul>
+	</nav>
+
+    <section id="description">
+		<p id="info"></p>
+	</section>
+</body>
+</html>

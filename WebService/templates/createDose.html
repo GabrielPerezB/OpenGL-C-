@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear dosis</title>
+</head>
+<body>
+    <nav id="menu">
+		<ul id="Options">
+			<form action="" class="form-inline" method="post">
+                <input type="text" class="form-control" placeholder= "ID" name="id"
+                    value="{{request.form.id}}">
+                <input type="text" class="form-control" placeholder="ID Animal"name="idAnimal"
+                    value="{{request.form.idAnimal}}">
+                <input type="text" class="form-control" placeholder="ID Medicamento"name="idMedicine"
+                    value="{{request.form.idMedicine}}">
+                <input type="text" class="form-control" placeholder="ID Enfermedad"name="idDisease"
+                    value="{{request.form.idDisease}}">
+                <input type="text" class="form-control" placeholder="Rango-Peso"name="weightRange"
+                    value="{{request.form.weightRange}}">
+                <input type="text" class="form-control" placeholder="Dosis"name="dose"
+                    value="{{request.form.dose}}">
+                <input class="btn btn-default" type="submit" value="Crear">
+            </form>
+
+		</ul>
+	</nav>
+    <p>{{ error }}</p>
+</body>
+</html>
