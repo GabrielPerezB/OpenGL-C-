@@ -9,13 +9,19 @@
     <title>Administrador </title>
 </head>
 <body>
-    <h1>Hey there Admin</h1>
+    <h1>Bienvenido</h1>
     <nav id="menu">
 		<ul id="Options">
-			<li id="First" value="0">Animales</li>
-			<li value="1">Medicinas</li>
-			<li value="2">Prescripciones</li>
-            <li value="3" ><a href={{url_for('createUser')}}            >Agregar usuario</a></li>
+            <form action="" class="form-inline"method="POST">
+                <input type="submit" name="action" value="Guardar Cambios" />
+                <input type="submit" name="action" value="Cancelar Cambios" />
+                <input type="submit" name="action" value="Listar Animales" />
+                <input type="submit" name="action" value="Listar Medicinas" />
+                <input type="submit" name="action" value="Listar Prescripciones" />
+                <input type="submit" name="action" value="Listar dosis x enfermedad" />
+                <input type="submit" name="action" value="Listar dosis x animal" />
+            </form>
+            <li id="First" value="3" ><a href={{url_for('createUser')}}            >Agregar usuario</a></li>
             <li value="4" ><a href={{url_for('createPrescription')}}    >Agregar prescripción</a></li>
             <li value="5" ><a href={{url_for('createDose')}}            >Agregar dosis</a></li>
             <li value="6" ><a href={{url_for('addAnimal')}}             >Agregar animal</a></li>

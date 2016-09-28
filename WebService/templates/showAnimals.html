@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificar animal</title>
+</head>
+<body>
+    <nav id="menu">
+		<ul id="Options">
+			<form action="" class="form-inline" method="post">
+
+                <input type="text" class="form-control" readonly value = "{{ id1 }}" name="id"
+                    value="{{request.form.id}}">
+                <input type="text" class="form-control" value= "{{ name1 }}" name="name"
+                    value="{{request.form.name}}">
+
+                <input type="text" class="form-control" readonly value = "{{ id2 }}" name="id"
+                    value="{{request.form.id}}">
+                <input type="text" class="form-control" value= "{{ name2 }}" name="name"
+                    value="{{request.form.name}}">
+
+                <input type="text" class="form-control" readonly value = "{{ id3 }}" name="id"
+                    value="{{request.form.id}}">
+                <input type="text" class="form-control" value= "{{ name3 }}" name="name"
+                    value="{{request.form.name}}">
+
+                <input class="btn btn-default" type="submit" value="Guardar">
+            </form>
+
+		</ul>
+	</nav>
+    <p>{{ error }}</p>
+</body>
+</html>
+
+
+
+
+
+
+
+

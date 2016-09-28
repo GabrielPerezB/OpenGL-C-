@@ -10,7 +10,7 @@
 			<form action="" class="form-inline" method="post">
                 <input type="text" class="form-control" placeholder= "ID" name="id"
                     value="{{request.form.id}}">
-                <input type="text" class="form-control" placeholder="ID Usuario"name="idUser"
+                <input type="text" class="form-control" readonly value = "{{ originalUserId }}" name="idUser"
                     value="{{request.form.idUser}}">
                 <input type="text" class="form-control" placeholder="ID Animal"name="idAnimal"
                     value="{{request.form.idAnimal}}">
@@ -18,7 +18,7 @@
                     value="{{request.form.idDisease}}">
                 <input type="text" class="form-control" placeholder="Peso"name="weight"
                     value="{{request.form.weight}}">
-                <input type="text" class="form-control" placeholder="Dosis"name="dose"
+                <input type="text" class="form-control" readonly placeholder="Dosis"name="dose"
                     value="{{request.form.dose}}">
                 <input class="btn btn-default" type="submit" value="Crear">
             </form>

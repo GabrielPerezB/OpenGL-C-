@@ -1,10 +1,87 @@
-from flask import Flask, render_template, flash, request, url_for, redirect
+'''
+Programed by GABRIEL PEREZ AND CRISTIAN ALVARADO
+LENGUAJES DE PROGRAMACION PARADIGMA FUNCIONAL
+'''
 
+from flask import Flask, render_template, request, url_for, redirect
 from Logic import *
 from Globals import *
-
+func = getDataFromListAnimals()
+func1 = getDataFromListMedisines()
+func2 = getDataFromListPrescriptions()
+func4 = getDataDosisXAnimal()
+func3 = getDataDosisXDisease()
 
 app = Flask(__name__)
+@app.route('/profileAdmin/',methods=["POST","GET"])
+def profileAdmin():
+    if len(userType) ==0:
+        return redirect(url_for('loginPage'))
+    try:
+        if request.method == "POST":
+            if request.form['action'] == 'Guardar Cambios':
+                safeToDB()
+            elif request.form['action'] == 'Cancelar Cambios':
+                cancel()
+            elif request.form['action'] == 'Listar Animales':
+                count = 0
+                while count <=4:
+                    returned = func.__next__().getInfo()
+                    if returned != "":
+                        print(returned)
+                    count += 1
+            elif request.form['action'] == 'Listar Medicinas':
+                count = 0
+                while count <=4:
+                    returned = func1.__next__().getInfo()
+                    if returned != "":
+                        print(returned)
+                    count += 1
+
+            elif request.form['action'] == 'Listar Prescripciones':
+                count = 0
+                while count <=4:
+                    returned = func2.__next__()
+
+                    print("\nPrescripcion: "+returned[0].id+" peso: "+returned[0].weight+
+                               "\n    usuario: "+returned[1].name+
+                               "\n    animal: "+returned[2].name+" descripcion: "+returned[2].description+
+                               "\n   enfermedad: "+returned[3].name+" descripcion: "+returned[3].description+
+                               "\n    dosis: "+returned[4].dose+
+                               "\n    medicina: "+returned[5].name+" descripcion: "+returned[5].description)
+                    count += 1
+            elif request.form['action'] == 'Listar dosis x enfermedad':
+                count = 0
+                while count <=4:
+                    returned = func3.__next__()
+                    print("\nEnfermedad: "+returned[0].name+" descripcion: "+returned[0].description)
+                    count2 = 1
+                    while count2 <= len(returned):
+                        print("    dosis: "+returned[count2][0].dose+
+                            "\n    medicina: "+returned[count2][1].name+" descripcion: "+returned[count2][1].description)
+                        count2 +=2
+
+                    count += 1
+
+            elif request.form['action'] == 'Listar dosis x animal':
+                count = 0
+                while count <=4:
+                    returned = func4.__next__()
+                    print("\nAnimal: "+returned[0].name+" descripcion: "+returned[0].description)
+                    count2 = 1
+                    while count2 <= len(returned):
+                        print("    dosis: " + returned[count2][0].dose +
+                            "\n    medicina: " + returned[count2][1].name + " descripcion: " + returned[count2][1].description)
+                        count2 += 2
+
+                    count += 1
+
+
+        return render_template("profileAdmin.html")
+    except:
+        return render_template("profileAdmin.html")
+    return render_template("profileAdmin.html")
+
 
 @app.route('/deleteUser/',methods=["POST","GET"])
 def deleteUser():
@@ -16,7 +93,8 @@ def deleteUser():
                 error = "Usuario no existe"
                 return render_template("deleteUser.html", error= error)
             deleteData(listUsers,attempment_id)
-            return render_template("profileAdmin.html",error = "Eliminado")
+            return  redirect(url_for('profileAdmin'))
+
         return render_template("deleteUser.html")
     except:
         return render_template("deleteUser.html", error=error)
@@ -32,9 +110,10 @@ def deleteAnimal():
                 return render_template("deleteAnimal.html", error= error)
             deleteData(listAnimals,attempment_id)
             if userType[0] == "admin":
-                return render_template("profileAdmin.html", error="Eliminado")
+                showData()
+                return redirect(url_for('profileAdmin'))
             else:
-                return render_template("profileUser.html", error="Eliminado")
+                return redirect(url_for('profileUser'))
         return render_template("deleteAnimal.html")
     except:
         return render_template("deleteAnimal.html", error=error)
@@ -52,9 +131,9 @@ def deleteDisease():
                 return render_template("deleteDisease.html", error= error)
             deleteData(listDiseases,attempment_id)
             if userType[0] == "admin":
-                return render_template("profileAdmin.html", error="Eliminado")
+                return redirect(url_for('profileAdmin'))
             else:
-                return render_template("profileUser.html", error="Eliminado")
+                return redirect(url_for('profileUser'))
         return render_template("deleteDisease.html")
     except:
         return render_template("deleteDisease.html", error=error)
@@ -71,9 +150,9 @@ def deleteDose():
                 return render_template("deleteDose.html", error= error)
             deleteData(listDoses,attempment_id)
             if userType[0] == "admin":
-                return render_template("profileAdmin.html", error="Eliminado")
+                return redirect(url_for('profileAdmin'))
             else:
-                return render_template("profileUser.html", error="Eliminado")
+                return redirect(url_for('profileUser'))
         return render_template("deleteDose.html")
     except:
         return render_template("deleteDose.html", error=error)
@@ -89,9 +168,9 @@ def deleteMedicine():
                 return render_template("deleteMedicine.html", error= error)
             deleteData(listMedicines,attempment_id)
             if userType[0] == "admin":
-                return render_template("profileAdmin.html", error="Eliminado")
+                return redirect(url_for('profileAdmin'))
             else:
-                return render_template("profileUser.html", error="Eliminado")
+                return redirect(url_for('profileUser'))
         return render_template("deleteMedicine.html")
     except:
         return render_template("deleteMedicine.html", error=error)
@@ -107,9 +186,9 @@ def deletePrescription():
                 return render_template("deletePrescription.html", error= error)
             deleteData(listPrescriptions,attempment_id)
             if userType[0] == "admin":
-                return render_template("profileAdmin.html", error="Eliminado")
+                return redirect(url_for('profileAdmin'))
             else:
-                return render_template("profileUser.html", error="Eliminado")
+                return redirect(url_for('profileUser'))
         return render_template("deletePrescription.html")
     except:
         return render_template("deletePrescription.html", error=error)
@@ -144,10 +223,10 @@ def updateAnimal():
             animal = classAnimal()
             addData(animal, *parameters)
             addDataList(listAnimals, animal)
-            if userType[0]=="admin":
-                return render_template("profileAdmin.html",error = "Agregado")
+            if userType[0] == "admin":
+                return redirect(url_for('profileAdmin'))
             else:
-                return render_template("profileUser.html",error = "Agregado")
+                return redirect(url_for('profileUser'))
         return render_template("updateAnimal.html", originalId = objectToUpdate[0].id,
                                originalName = objectToUpdate[0].name,
                                originalDescription = objectToUpdate[0].description,
@@ -185,10 +264,10 @@ def updateDisease():
             disease = classDisease()
             addData(disease, *parameters)
             addDataList(listDiseases, disease)
-            if userType[0]=="admin":
-                return render_template("profileAdmin.html",error = "Modificado")
+            if userType[0] == "admin":
+                return redirect(url_for('profileAdmin'))
             else:
-                return render_template("profileUser.html",error = "Modificado")
+                return redirect(url_for('profileUser'))
         return render_template("updateDisease.html", originalId = objectToUpdate[0].id,
                                originalName = objectToUpdate[0].name,
                                originalDescription = objectToUpdate[0].description,
@@ -260,10 +339,10 @@ def updateDose():
             addData(dose, *parameters)
             addDataList(listDoses, dose)
             showData()
-            if userType[0]=="admin":
-                return render_template("profileAdmin.html",error = "Modificado")
+            if userType[0] == "admin":
+                return redirect(url_for('profileAdmin'))
             else:
-                return render_template("profileUser.html",error = "Modificado")
+                return redirect(url_for('profileUser'))
         return render_template("updateDose.html",originalId=objectToUpdate[0].id ,
                     originalIdAnimal= objectToUpdate[0].animalId,
                     originalIdMedicine= objectToUpdate[0].medicineId,
@@ -306,11 +385,11 @@ def updateMedicine():
             medicine = classMedicine()
             addData(medicine, *parameters)
             addDataList(listMedicines, medicine)
-            if userType[0]=="admin":
-                return render_template("profileAdmin.html",error = "Modificado")
+            if userType[0] == "admin":
+                return redirect(url_for('profileAdmin'))
             else:
-                return render_template("profileUser.html",error = "Modificado")
-        return render_template("updateMedicine.html", originalId = objectToUpdate[0].id,
+                return redirect(url_for('profileUser'))
+            return render_template("updateMedicine.html", originalId = objectToUpdate[0].id,
                                originalName = objectToUpdate[0].name,
                                originalDescription = objectToUpdate[0].description,
                                originalPhoto = objectToUpdate[0].photo)
@@ -338,18 +417,12 @@ def searchPrescriptionToUpdate():
 def updatePrescription():
     error = ""
     try:
-
-
         if request.method == "POST":
             attempment_id = request.form['id']
             attempment_idUser = request.form['idUser']
             attempment_idAnimal = request.form['idAnimal']
             attempment_idDisease = request.form['idDisease']
             attempment_weight = request.form['weight']
-            attempment_dose = request.form['dose']
-
-            parameters = [attempment_id,attempment_idUser, attempment_idAnimal,
-                          attempment_idDisease,attempment_weight,attempment_dose]
 
             if validateData(listAnimals,attempment_idAnimal) == 0:
                 error = "Animal no existe"
@@ -369,23 +442,39 @@ def updatePrescription():
                                      originalWeight=objectToUpdate[0].weight,
                                      originalDoseId=objectToUpdate[0].doseId,
                                      error = error)
-            if validateData(listDoses,attempment_dose) == 0:
-                error = "Dosis no existe"
+            if len(listDoses) == 0:
+                error = "No Hay Dosis"
                 return render_template("updatePrescription.html", originalId=objectToUpdate[0].id,
-                                     originaluserId=objectToUpdate[0].userId,
-                                     originalAnimalId=objectToUpdate[0].animalId,
-                                     originalDiseaseId=objectToUpdate[0].diseaseId,
-                                     originalWeight=objectToUpdate[0].weight,
-                                     originalDoseId=objectToUpdate[0].doseId,
-                                     error = error)
+                                       originaluserId=objectToUpdate[0].userId,
+                                       originalAnimalId=objectToUpdate[0].animalId,
+                                       originalDiseaseId=objectToUpdate[0].diseaseId,
+                                       originalWeight=objectToUpdate[0].weight,
+                                       originalDoseId=objectToUpdate[0].doseId,
+                                       error=error)
+            attempment_dose = getRecomendedDose(listDoses,attempment_weight, attempment_idAnimal,attempment_idDisease)
+            if attempment_dose == 0:
+                error = "No Hay Dosis recomendada"
+                return render_template("updatePrescription.html", originalId=objectToUpdate[0].id,
+                                       originaluserId=objectToUpdate[0].userId,
+                                       originalAnimalId=objectToUpdate[0].animalId,
+                                       originalDiseaseId=objectToUpdate[0].diseaseId,
+                                       originalWeight=objectToUpdate[0].weight,
+                                       originalDoseId=objectToUpdate[0].doseId,
+                                       error=error)
+
+            parameters = [attempment_id, attempment_idUser, attempment_idAnimal,
+                          attempment_idDisease, attempment_weight, attempment_dose]
+
             deleteData(listPrescriptions,attempment_id)
             prescription = classPresciption()
             addData(prescription, *parameters)
             addDataList(listPrescriptions, prescription)
-            if userType[0]=="admin":
-                return render_template("profileAdmin.html",error = "Modificado")
+            if userType[0] == "admin":
+                return redirect(url_for('profileAdmin'))
+
             else:
-                return render_template("profileUser.html",error = "Modificado")
+                return redirect(url_for('profileUser'))
+
         return render_template("updatePrescription.html", originalId=objectToUpdate[0].id,
                                      originaluserId=objectToUpdate[0].userId,
                                      originalAnimalId=objectToUpdate[0].animalId,
@@ -394,7 +483,13 @@ def updatePrescription():
                                      originalDoseId=objectToUpdate[0].doseId,
                                      error = error)
     except:
-        return render_template("updatePrescription.html", error=error)
+        return render_template("updatePrescription.html", originalId=objectToUpdate[0].id,
+                                     originaluserId=objectToUpdate[0].userId,
+                                     originalAnimalId=objectToUpdate[0].animalId,
+                                     originalDiseaseId=objectToUpdate[0].diseaseId,
+                                     originalWeight=objectToUpdate[0].weight,
+                                     originalDoseId=objectToUpdate[0].doseId,
+                                     error = error)
 
 
 
@@ -432,7 +527,8 @@ def updateUser():
             addData(user,*parameters)
             addDataList(listUsers, user)
             showData()
-            return render_template("profileAdmin.html",error = "Modificado")
+            return redirect(url_for('profileAdmin'))
+
         return render_template("updateUser.html", originalId = objectToUpdate[0].id,
                                originalPassword = objectToUpdate[0].password,
                                originalName = objectToUpdate[0].name,
@@ -460,7 +556,8 @@ def createUser():
             user = classUser()
             addData(user,*parameters)
             addDataList(listUsers, user)
-            return render_template("profileAdmin.html",error = "Agregado")
+            return redirect(url_for('profileAdmin'))
+
         return render_template("addUser.html")
     except:
         return render_template("addUser.html", error=error)
@@ -468,7 +565,7 @@ def createUser():
 
 @app.route('/createPrescription/',methods=["POST","GET"])
 def createPrescription():
-    error = '.'
+    error = ""
     try:
         if request.method == "POST":
             attempment_id = request.form['id']
@@ -476,10 +573,7 @@ def createPrescription():
             attempment_idAnimal = request.form['idAnimal']
             attempment_idDisease = request.form['idDisease']
             attempment_weight = request.form['weight']
-            attempment_dose = request.form['dose']
 
-            parameters = [attempment_id,attempment_idUser, attempment_idAnimal,
-                          attempment_idDisease,attempment_weight,attempment_dose]
             if validateData(listUsers,attempment_idUser) == 0:
                 error = "Usuario no existe"
                 return render_template("addPrescription.html", error=error)
@@ -489,17 +583,27 @@ def createPrescription():
             if validateData(listDiseases,attempment_idDisease) == 0:
                 error = "Enfermedad no existe"
                 return render_template("addPrescription.html", error=error)
-            if validateData(listDoses,attempment_dose) == 0:
-                error = "Dosis no existe"
+            if len(listDoses) == 0:
+                error = "No Hay Dosis"
                 return render_template("addPrescription.html", error=error)
+            attempment_dose = getRecomendedDose(listDoses,attempment_weight, attempment_idAnimal,attempment_idDisease)
+
+
+            if attempment_dose == 0:
+                error = "No Hay Dosis recomendada"
+                return render_template("addPrescription.html", error=error)
+            parameters = [attempment_id, attempment_idUser, attempment_idAnimal,
+                          attempment_idDisease, attempment_weight, attempment_dose]
             prescription = classPresciption()
             addData(prescription, *parameters)
             addDataList(listPrescriptions, prescription)
             if userType[0]=="admin":
-                return render_template("profileAdmin.html",error = "Agregado")
+                return redirect(url_for('profileAdmin'))
+
             else:
-                return render_template("profileUser.html",error = "Agregado")
-        return render_template("addPrescription.html")
+                return redirect(url_for('profileUser'))
+
+        return render_template("addPrescription.html",originalUserId=userType[1])
     except:
         return render_template("addPrescription.html", error=error)
 
@@ -524,9 +628,11 @@ def addAnimal():
             addData(animal, *parameters)
             addDataList(listAnimals, animal)
             if userType[0]=="admin":
-                return render_template("profileAdmin.html",error = "Agregado")
+                return redirect(url_for('profileAdmin'))
+
             else:
-                return render_template("profileUser.html",error = "Agregado")
+                return redirect(url_for('profileUser'))
+
         return render_template("addAnimal.html")
     except:
         return render_template("addAnimal.html", error=error)
@@ -548,9 +654,11 @@ def addDisease():
             addData(disease, *parameters)
             addDataList(listDiseases, disease)
             if userType[0]=="admin":
-                return render_template("profileAdmin.html",error = "Agregado")
+                return redirect(url_for('profileAdmin'))
+
             else:
-                return render_template("profileUser.html",error = "Agregado")
+                return redirect(url_for('profileUser'))
+
         return render_template("addDisease.html")
     except:
         return render_template("addDisease.html", error=error)
@@ -573,9 +681,11 @@ def addMedicine():
             addData(medicine, *parameters)
             addDataList(listMedicines, medicine)
             if userType[0]=="admin":
-                return render_template("profileAdmin.html",error = "Agregado")
+                return redirect(url_for('profileAdmin'))
+
             else:
-                return render_template("profileUser.html",error = "Agregado")
+                return redirect(url_for('profileUser'))
+
         return render_template("addMedicine.html")
     except:
         return render_template("addMedicine.html", error=error)
@@ -610,58 +720,69 @@ def createDose():
             addData(dose, *parameters)
             addDataList(listDoses, dose)
             if userType[0]=="admin":
-                return render_template("profileAdmin.html",error = "Agregado")
+                return redirect(url_for('profileAdmin'))
+
             else:
-                return render_template("profileUser.html",error = "Agregado")
+                return redirect(url_for('profileUser'))
+
         return render_template("addDose.html")
     except:
         return render_template("addDose.html", error=error)
 
 
 
-
-@app.route('/profileAdmin/')
-def profileAdmin():
-    error = ''
+@app.route('/profileUser/',methods=["GET","POST"])
+def profileUser():
+    if len(userType) ==0:
+        return redirect(url_for('loginPage'))
     try:
         if request.method == "POST":
-            attempment_createUser = request.form['createUser']
+            if request.form['action'] == 'Guardar Cambios':
+                insertToDisease()
+                inserToAnimal()
+                inserToDoses()
+                inserToMedicine()
+                inserToPrescription()
+                inserToUser()
 
-            if  attempment_createUser == "createUser":
-                return redirect(url_for('createUser'))
+            elif request.form['action'] == 'Cancelar Cambios':
+                deleteAllFromLists()
+                loadToUser()
+                loadToAnimal()
+                loadToDisease()
+                loadToDoses()
+                loadToMedicine()
+                loadToPrescription()
 
-            else:
-                error = "Por favor intente de nuevo"
-
-        return render_template("profileAdmin.html")
+                return render_template("profileUser.html")
     except:
-        return render_template("profileAdmin.html",error = error)
-
-
-
-
-@app.route('/profileUser/')
-def profileUser():
+        return render_template("profileUser.html")
     return render_template("profileUser.html")
+
 
 @app.route('/login/',methods=["GET","POST"])
 def loginPage():
 
     if len(listUsers)==0:
-        defaultData()
+        #defaultData()
+        loadToUser()
+        loadToAnimal()
+        loadToDisease()
+        loadToDoses()
+        loadToMedicine()
+        loadToPrescription()
     error = ''
     try:
-
         if request.method == "POST":
             attempment_username = request.form['username']
             attempment_password = request.form['password']
             parameters = [attempment_username, attempment_password]
 
             if getUserType(*parameters) == "admin":
-                saveCurerntUser("admin")
+                saveCurerntUser("admin",attempment_username)
                 return redirect(url_for('profileAdmin'))
             if getUserType(*parameters) == "user":
-                saveCurerntUser("user")
+                saveCurerntUser("user",attempment_username)
                 return redirect(url_for('profileUser'))
             else:
                 error = "Datos incorrectos por favor intente de nuevo"

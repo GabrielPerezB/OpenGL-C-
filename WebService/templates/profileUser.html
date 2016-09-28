@@ -8,12 +8,33 @@
     <title>Usuario </title>
 </head>
 <body>
-    <h1>Hey there User </h1>
+    <h1>Bienvenido</h1>
     <nav id="menu">
 		<ul id="Options">
-			<li id="First" value="0">Animales</li>
-			<li value="1">Medicinas</li>
-			<li value="2">Prescripciones</li>
+			<form action="" class="form-inline"method="POST">
+                <input type="submit" name="action" value="Guardar Cambios" />
+                <input type="submit" name="action" value="Cancelar Cambios" />
+            </form>
+            <li value="1" >Listar Medicinas</a></li>
+            <li value="2" >Listar Prescripciones</a></li>
+            <li value="22" >Listar dosis x enfermedad</a></li>
+            <li value="23" >Listar dosis x animal</a></li>
+            <li value="4" ><a href={{url_for('createPrescription')}}    >Agregar prescripción</a></li>
+            <li value="5" ><a href={{url_for('createDose')}}            >Agregar dosis</a></li>
+            <li value="6" ><a href={{url_for('addAnimal')}}             >Agregar animal</a></li>
+            <li value="7" ><a href={{url_for('addMedicine')}}           >Agregar medicina</a></li>
+            <li value="8" ><a href={{url_for('addDisease')}}            >Agregar enfermedad</a></li>
+            <li value="10" ><a href={{url_for('deletePrescription')}}   >Eliminar prescripción</a></li>
+            <li value="11" ><a href={{url_for('deleteDose')}}           >Eliminar dosis</a></li>
+            <li value="12" ><a href={{url_for('deleteAnimal')}}         >Eliminar animal</a></li>
+            <li value="13" ><a href={{url_for('deleteMedicine')}}       >Eliminar medicina</a></li>
+            <li value="14" ><a href={{url_for('deleteDisease')}}        >Eliminar enfermedad</a></li>
+		    <li value="15" ><a href={{url_for('searchAnimalToUpdate')}} >Modificar animal</a></li>
+            <li value="17" ><a href={{url_for('searchPrescriptionToUpdate')}}   >Modificar prescripción</a></li>
+            <li value="18" ><a href={{url_for('searchDoseToUpdate')}}           >Modificar dosis</a></li>
+            <li value="19" ><a href={{url_for('searchAnimalToUpdate')}}         >Modificar animal</a></li>
+            <li value="20" ><a href={{url_for('searchMedicineToUpdate')}}       >Modificar medicina</a></li>
+            <li value="21" ><a href={{url_for('searchDiseaseToUpdate')}}        >Modificar enfermedad</a></li>
 		</ul>
         <p> {{ error }}</p>
 	</nav>

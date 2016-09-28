@@ -1,9 +1,12 @@
+var data = [
+
+];
 
 $(document).ready(function(){
 	start();
 	$("#Options li").click(function(e){
 		var value = this.value;
-		$("#info").text("HI");
+		$("#info").text(data);
 		changeStyle(this);
 	});
 });
@@ -15,5 +18,5 @@ function changeStyle(element){
 
 function start(){
 	$("#First").addClass("selected");
-	$("#info").text("how");
+	$("#info").text(data);
 }
