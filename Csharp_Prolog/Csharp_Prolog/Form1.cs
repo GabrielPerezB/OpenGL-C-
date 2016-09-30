@@ -15,6 +15,19 @@ namespace Csharp_Prolog
         public Form1()
         {
             InitializeComponent();
+            levelComboBox.SelectedIndex = 0;
+            levelComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+        }
+
+        private void nextFromButton_Click(object sender, EventArgs e)
+        {
+            int level = levelComboBox.SelectedIndex;
+            Globals globals = new Globals();
+            globals.setLevel(level);
+
+            Form2 window = new Form2();
+            window.Show();
+            this.Hide();
         }
     }
 }
